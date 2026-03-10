@@ -28,7 +28,7 @@ def get_transcript(url):
 
 
     except Exception as e:
-        return None
+        return f"ERROR: {e}"
 
 def chunk_text(text, chunk_size):
     chunks = []

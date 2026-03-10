@@ -75,7 +75,7 @@ try:
         else:
             with st.spinner("Fetching transcript and summarizing..."):
                 transcript = get_transcript(url)
-                if transcript:
+                if transcript and not transcript.startswith("ERROR"):
                     chunks = chunk_text(transcript, 8000)
                     mini_summaries = []
                     for chunk in chunks:
@@ -83,6 +83,6 @@ try:
                     final_summary = summarize(" ".join(mini_summaries))
                     st.markdown(f'<div class="summary-box">{final_summary}</div>', unsafe_allow_html=True)
                 else:
-                    st.error("Couldn't fetch transcript. Try a video with captions enabled.")
+                    st.error(transcript or "Couldn't fetch transcript")
 except Exception as e:
     st.error(f"Something went wrong. Please try again after few minutes")

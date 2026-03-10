@@ -3,13 +3,19 @@ from urllib.parse import urlparse, parse_qs
 from groq import Groq
 import os
 from dotenv import load_dotenv
+from youtube_transcript_api.proxies import WebshareProxyConfig
 load_dotenv()
 
 
 
 def get_transcript(url):
     parsed_url = urlparse(url)
-    ytt_api = YouTubeTranscriptApi()
+    ytt_api = YouTubeTranscriptApi(
+    proxy_config=WebshareProxyConfig(
+        proxy_username=os.getenv("PROXY_USERNAME"),
+        proxy_password=os.getenv("PROXY_PASSWORD"),
+    )
+)
 
     if parsed_url.netloc=='youtu.be':
         vid_id = parsed_url.path[1:]
